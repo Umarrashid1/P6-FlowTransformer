@@ -7,10 +7,6 @@ first = True  # To handle writing header only once
 
 for root, _, files in os.walk(data_dir):
     for filename in files:
-        i = 0
-        i = i + 1
-        print(i)
-        os.walk(data_dir).__sizeof__()
         print(filename)
         if filename.endswith('.csv'):
             file_path = os.path.join(root, filename)
