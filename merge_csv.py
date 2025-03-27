@@ -1,22 +1,31 @@
 import os
 import pandas as pd
 
-data_dir = '\\\\wsl.localhost\\Ubuntu\\home\\ubuntu\\DatasetFlow'
-dfs = []
+data_dir = r'\\wsl.localhost\Ubuntu\home\ubuntu\DatasetFlow'
+output_file = 'merged_binary_dataset.csv'
+first = True  # To handle writing header only once
 
-for root, _, files in os.walk(data_dir):  # walks through subdirs too
+for root, _, files in os.walk(data_dir):
     for filename in files:
+        i = 0
+        i = i + 1
+        print(i)
+        os.walk(data_dir).__sizeof__()
+        print(filename)
         if filename.endswith('.csv'):
             file_path = os.path.join(root, filename)
-            df = pd.read_csv(file_path)
 
-            # Decide if this is benign or attack based on the folder or file name
-            if 'benign' in file_path.lower():
-                df['Label'] = 'Benign'
-            else:
-                df['Label'] = 'Attack'
+            try:
+                df = pd.read_csv(file_path)
 
-            dfs.append(df)
+                if 'benign' in file_path.lower():
+                    df['Label'] = 'Benign'
+                else:
+                    df['Label'] = 'Attack'
 
-full_dataset = pd.concat(dfs, ignore_index=True)
-full_dataset.to_csv("merged_binary_dataset.csv", index=False)
+                # Append to output CSV without keeping all in memory
+                df.to_csv(output_file, mode='a', index=False, header=first)
+                first = False  # Only write header once
+
+            except Exception as e:
+                print(f"Error reading {file_path}: {e}")

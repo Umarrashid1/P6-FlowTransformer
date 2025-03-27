@@ -57,7 +57,7 @@ ft = FlowTransformer(pre_processing=pre_processing,
 
 # Load the specific dataset
 dataset_name = "DIAD"
-dataset_path =
+dataset_path = '\\\\wsl.localhost\\Ubuntu\\home\\ubuntu\\DatasetFlow\\merged_binary_dataset.csv'
 eval_percent = 0.01
 eval_method = EvaluationDatasetSampling.LastRows
 
