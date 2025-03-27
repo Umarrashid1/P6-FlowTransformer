@@ -27,10 +27,15 @@ class StandardPreProcessing(BasePreProcessing):
         }
 
     def fit_numerical(self, column_name: str, values: np.array):
+        values = values[~np.isnan(values)]  # Remove NaNs
+        if len(values) == 0:
+            print(f"⚠️ Warning: No valid values found for numerical column '{column_name}', skipping.")
+            self.min_range[column_name] = (0.0, 1.0)  # default to avoid crash
+            return
 
         v0 = np.min(values)
         v1 = np.max(values)
-        r = v1 - v0
+        r = v1 - v0 if v1 != v0 else 1.0  # prevent divide-by-zero
 
         self.min_range[column_name] = (v0, r)
 
