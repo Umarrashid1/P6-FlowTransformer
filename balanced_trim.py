@@ -1,25 +1,31 @@
 import pandas as pd
 
-chunksize = 50_000  # how many rows to load at a time
+chunksize = 10  # how many rows to load at a time
 benign_rows = []
 attack_rows = []
-max_per_class = 50_000  # max number of rows you want per class (adjust as needed)
+benign_count = 0
+attack_count = 0
+max_per_class = 10  # adjust as needed
 
 for chunk in pd.read_csv("merged_binary_dataset.csv", chunksize=chunksize):
     benign_chunk = chunk[chunk["Label"] == "Benign"]
     attack_chunk = chunk[chunk["Label"] != "Benign"]
 
-    # Sample from current chunk (you can skip sampling if counts are already low)
-    if len(benign_rows) < max_per_class:
-        needed = max_per_class - len(benign_rows)
-        benign_rows.append(benign_chunk.sample(n=min(needed, len(benign_chunk)), random_state=42))
+    # Sample from current chunk and track row count
+    if benign_count < max_per_class and not benign_chunk.empty:
+        needed = max_per_class - benign_count
+        sampled = benign_chunk.sample(n=min(needed, len(benign_chunk)), random_state=42)
+        benign_rows.append(sampled)
+        benign_count += len(sampled)
 
-    if len(attack_rows) < max_per_class:
-        needed = max_per_class - len(attack_rows)
-        attack_rows.append(attack_chunk.sample(n=min(needed, len(attack_chunk)), random_state=42))
+    if attack_count < max_per_class and not attack_chunk.empty:
+        needed = max_per_class - attack_count
+        sampled = attack_chunk.sample(n=min(needed, len(attack_chunk)), random_state=42)
+        attack_rows.append(sampled)
+        attack_count += len(sampled)
 
-    if len(benign_rows) >= max_per_class and len(attack_rows) >= max_per_class:
-        break  # we have enough of both, stop early
+    if benign_count >= max_per_class and attack_count >= max_per_class:
+        break
 
 # Combine and shuffle
 df_balanced = pd.concat(benign_rows + attack_rows, ignore_index=True)
