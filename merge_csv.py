@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-data_dir = r'\\wsl.localhost\Ubuntu\home\ubuntu\DatasetFlow'
+data_dir = "Dataset"
 output_file = 'merged_binary_dataset.csv'
 first = True  # To handle writing header only once
 
