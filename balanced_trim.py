@@ -1,6 +1,6 @@
 import pandas as pd
 
-chunksize = 10
+chunksize = 1000
 benign_rows = []
 attack_rows = []
 benign_count = 0
