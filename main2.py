@@ -40,13 +40,7 @@ transformers: List[FunctionalComponent] = [
     BERTSmallTransformer()
 ]
 
-flow_file_path = r"C:\Data\UQ\NIDS\Collected"
 
-datasets = [
-    ("CSE_CIC_IDS", os.path.join(flow_file_path, "NF-CSE-CIC-IDS2018-v2.csv"), NamedDatasetSpecifications.unified_flow_format, 0.01, EvaluationDatasetSampling.LastRows),
-    ("NSL-KDD", os.path.join(flow_file_path, "NSL-KDD.csv"), NamedDatasetSpecifications.nsl_kdd, 0.05, EvaluationDatasetSampling.RandomRows),
-    ("UNSW_NB15", os.path.join(flow_file_path, "NF-UNSW-NB15-v2.csv"), NamedDatasetSpecifications.unified_flow_format, 0.025, EvaluationDatasetSampling.LastRows)
-]
 
 pre_processing = StandardPreProcessing(n_categorical_levels=32)
 
@@ -57,10 +51,49 @@ ft = FlowTransformer(pre_processing=pre_processing,
                      classification_head=classification_heads[0],
                      params=FlowTransformerParameters(window_size=8, mlp_layer_sizes=[128], mlp_dropout=0.1))
 
-# Load the specific dataset
-dataset_name, dataset_path, dataset_specification, eval_percent, eval_method = datasets[0]
 
-ft.load_dataset(dataset_name, dataset_path, dataset_specification, evaluation_dataset_sampling=eval_method, evaluation_percent=eval_percent)
+
+
+
+# Load the specific dataset
+dataset_name = "DIAD"
+dataset_path =
+eval_percent = 0.01
+eval_method = EvaluationDatasetSampling.LastRows
+
+dataset_specification = DatasetSpecification(
+    include_fields=[
+        'Flow duration', 'total Fwd Packet', 'total Bwd packets', 'total Length of Fwd Packet',
+        'total Length of Bwd Packet', 'Fwd Packet Length Min', 'Fwd Packet Length Max',
+        'Fwd Packet Length Mean', 'Fwd Packet Length Std', 'Bwd Packet Length Min',
+        'Bwd Packet Length Max', 'Bwd Packet Length Mean', 'Bwd Packet Length Std',
+        'Flow Bytes/s', 'Flow Packets/s', 'Flow IAT Mean', 'Flow IAT Std', 'Flow IAT Max',
+        'Flow IAT Min', 'Fwd IAT Min', 'Fwd IAT Max', 'Fwd IAT Mean', 'Fwd IAT Std',
+        'Fwd IAT Total', 'Bwd IAT Min', 'Bwd IAT Max', 'Bwd IAT Mean', 'Bwd IAT Std',
+        'Bwd IAT Total', 'Fwd PSH flags', 'Bwd PSH Flags', 'Fwd URG Flags', 'Bwd URG Flags',
+        'Fwd Header Length', 'Bwd Header Length', 'FWD Packets/s', 'Bwd Packets/s',
+        'Packet Length Min', 'Packet Length Max', 'Packet Length Mean', 'Packet Length Std',
+        'Packet Length Variance', 'FIN Flag Count', 'SYN Flag Count', 'RST Flag Count',
+        'PSH Flag Count', 'ACK Flag Count', 'URG Flag Count', 'CWR Flag Count', 'ECE Flag Count',
+        'down/Up Ratio', 'Average Packet Size', 'Fwd Segment Size Avg', 'Bwd Segment Size Avg',
+        'Fwd Bytes/Bulk Avg', 'Fwd Packet/Bulk Avg', 'Fwd Bulk Rate Avg', 'Bwd Bytes/Bulk Avg',
+        'Bwd Packet/Bulk Avg', 'Bwd Bulk Rate Avg', 'Subflow Fwd Packets', 'Subflow Fwd Bytes',
+        'Subflow Bwd Packets', 'Subflow Bwd Bytes', 'Fwd Init Win bytes', 'Bwd Init Win bytes',
+        'Fwd Act Data Pkts', 'Fwd Seg Size Min', 'Active Min', 'Active Mean', 'Active Max',
+        'Active Std', 'Idle Min', 'Idle Mean', 'Idle Max', 'Idle Std'
+    ],
+    categorical_fields=['Src Port', 'Dst Port', 'Protocol'],
+    class_column='Label',
+    benign_label='Benign'
+)
+
+
+
+ft.load_dataset(dataset_name,
+                dataset_path,
+                dataset_specification,
+                evaluation_dataset_sampling=eval_method,
+                evaluation_percent=eval_percent)
 
 # Build the transformer model
 m = ft.build_model()
