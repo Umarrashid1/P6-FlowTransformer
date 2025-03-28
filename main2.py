@@ -54,17 +54,10 @@ ft = FlowTransformer(pre_processing=pre_processing,
 
 
 
-df = pd.read_csv("merged_binary_dataset.csv")
-
-train_fraction = 0.01
-df.sample(frac=train_fraction, random_state=42).to_csv("train_subset.csv", index=False)
-
-
-
 
 # Load the specific dataset
 dataset_name = "DIAD"
-dataset_path = 'train_subset.csv'
+dataset_path = 'merged_binary_dataset.csv'
 eval_percent = 0.01
 eval_method = EvaluationDatasetSampling.LastRows
 
