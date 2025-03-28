@@ -107,7 +107,7 @@ m.compile(optimizer="adam", loss='binary_crossentropy', metrics=['binary_accurac
 
 # Get the evaluation results
 eval_results: pd.DataFrame
-(train_results, eval_results, final_epoch) = ft.evaluate(m, batch_size=128, epochs=5, steps_per_epoch=64, early_stopping_patience=5)
+(train_results, eval_results, final_epoch) = ft.evaluate(m, batch_size=64, epochs=5, steps_per_epoch=64, early_stopping_patience=5)
 
 
 print(eval_results)
