@@ -63,32 +63,32 @@ eval_method = EvaluationDatasetSampling.LastRows
 
 dataset_specification = DatasetSpecification(
     include_fields=[
-        'Flow Duration', 'Total Fwd Packet', 'Total Bwd packets', 'Total Length of Fwd Packet',
-        'Total Length of Bwd Packet', 'Fwd Packet Length Max', 'Fwd Packet Length Min',
-        'Fwd Packet Length Mean', 'Fwd Packet Length Std', 'Bwd Packet Length Max',
-        'Bwd Packet Length Min', 'Bwd Packet Length Mean', 'Bwd Packet Length Std',
-        'Flow Bytes/s', 'Flow Packets/s', 'Flow IAT Mean', 'Flow IAT Std', 'Flow IAT Max',
-        'Flow IAT Min', 'Fwd IAT Total', 'Fwd IAT Mean', 'Fwd IAT Std', 'Fwd IAT Max',
-        'Fwd IAT Min', 'Bwd IAT Total', 'Bwd IAT Mean', 'Bwd IAT Std', 'Bwd IAT Max',
-        'Bwd IAT Min', 'Fwd PSH Flags', 'Bwd PSH Flags', 'Fwd URG Flags', 'Bwd URG Flags',
-        'Fwd Header Length', 'Bwd Header Length', 'Fwd Packets/s', 'Bwd Packets/s',
-        'Packet Length Min', 'Packet Length Max', 'Packet Length Mean', 'Packet Length Std',
-        'Packet Length Variance', 'FIN Flag Count', 'SYN Flag Count', 'RST Flag Count',
-        'PSH Flag Count', 'ACK Flag Count', 'URG Flag Count', 'CWR Flag Count',
-        'ECE Flag Count', 'Down/Up Ratio', 'Average Packet Size', 'Fwd Segment Size Avg',
-        'Bwd Segment Size Avg', 'Fwd Bytes/Bulk Avg', 'Fwd Packet/Bulk Avg',
-        'Fwd Bulk Rate Avg', 'Bwd Bytes/Bulk Avg', 'Bwd Packet/Bulk Avg',
-        'Bwd Bulk Rate Avg', 'Subflow Fwd Packets', 'Subflow Fwd Bytes',
-        'Subflow Bwd Packets', 'Subflow Bwd Bytes', 'FWD Init Win Bytes',
-        'Bwd Init Win Bytes', 'Fwd Act Data Pkts', 'Fwd Seg Size Min',
-        'Active Mean', 'Active Std', 'Active Max', 'Active Min', 'Idle Mean',
-        'Idle Std', 'Idle Max', 'Idle Min'
+        'Flow_Duration', 'Total_Fwd_Packet', 'Total_Bwd_packets', 'Total_Length_of_Fwd_Packet',
+        'Total_Length_of_Bwd_Packet', 'Fwd_Packet_Length_Max', 'Fwd_Packet_Length_Min',
+        'Fwd_Packet_Length_Mean', 'Fwd_Packet_Length_Std', 'Bwd_Packet_Length_Max',
+        'Bwd_Packet_Length_Min', 'Bwd_Packet_Length_Mean', 'Bwd_Packet_Length_Std',
+        'Flow_Bytes_per_s', 'Flow_Packets_per_s', 'Flow_IAT_Mean', 'Flow_IAT_Std', 'Flow_IAT_Max',
+        'Flow_IAT_Min', 'Fwd_IAT_Total', 'Fwd_IAT_Mean', 'Fwd_IAT_Std', 'Fwd_IAT_Max',
+        'Fwd_IAT_Min', 'Bwd_IAT_Total', 'Bwd_IAT_Mean', 'Bwd_IAT_Std', 'Bwd_IAT_Max',
+        'Bwd_IAT_Min', 'Fwd_PSH_Flags', 'Bwd_PSH_Flags', 'Fwd_URG_Flags', 'Bwd_URG_Flags',
+        'Fwd_Header_Length', 'Bwd_Header_Length', 'Fwd_Packets_per_s', 'Bwd_Packets_per_s',
+        'Packet_Length_Min', 'Packet_Length_Max', 'Packet_Length_Mean', 'Packet_Length_Std',
+        'Packet_Length_Variance', 'FIN_Flag_Count', 'SYN_Flag_Count', 'RST_Flag_Count',
+        'PSH_Flag_Count', 'ACK_Flag_Count', 'URG_Flag_Count', 'CWR_Flag_Count',
+        'ECE_Flag_Count', 'Down_per_Up_Ratio', 'Average_Packet_Size', 'Fwd_Segment_Size_Avg',
+        'Bwd_Segment_Size_Avg', 'Fwd_Bytes_per_Bulk_Avg', 'Fwd_Packet_per_Bulk_Avg',
+        'Fwd_Bulk_Rate_Avg', 'Bwd_Bytes_per_Bulk_Avg', 'Bwd_Packet_per_Bulk_Avg',
+        'Bwd_Bulk_Rate_Avg', 'Subflow_Fwd_Packets', 'Subflow_Fwd_Bytes',
+        'Subflow_Bwd_Packets', 'Subflow_Bwd_Bytes', 'FWD_Init_Win_Bytes',
+        'Bwd_Init_Win_Bytes', 'Fwd_Act_Data_Pkts', 'Fwd_Seg_Size_Min',
+        'Active_Mean', 'Active_Std', 'Active_Max', 'Active_Min', 'Idle_Mean',
+        'Idle_Std', 'Idle_Max', 'Idle_Min'
     ],
-
-categorical_fields=['Src Port', 'Dst Port', 'Protocol'],
+    categorical_fields=['Src_Port', 'Dst_Port', 'Protocol'],
     class_column='Label',
     benign_label='Benign'
 )
+
 
 
 
