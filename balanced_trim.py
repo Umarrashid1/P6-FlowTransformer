@@ -1,33 +1,29 @@
 import pandas as pd
 
-chunksize = 10000
-benign_rows = []
-attack_rows = []
-benign_count = 0
-attack_count = 0
-max_per_class = 500000
+# Load full dataset into memory
+df = pd.read_csv("merged_binary_dataset.csv")
 
-for chunk in pd.read_csv("merged_binary_dataset.csv", chunksize=chunksize):
-    if benign_count >= max_per_class and attack_count >= max_per_class:
-        break
+# Normalize label format
+df["Label"] = df["Label"].astype(str).str.strip().str.lower()
 
-    benign_chunk = chunk[chunk["Label"] == "Benign"]
-    attack_chunk = chunk[chunk["Label"] != "Benign"]
+# Split into classes
+benign_df = df[df["Label"] == "benign"]
+attack_df = df[df["Label"] != "benign"]
 
-    if benign_count < max_per_class and not benign_chunk.empty:
-        needed = max_per_class - benign_count
-        sampled = benign_chunk.sample(n=min(needed, len(benign_chunk)), random_state=42)
-        benign_rows.append(sampled)
-        benign_count += len(sampled)
+print(f"✅ Found {len(benign_df)} benign rows and {len(attack_df)} attack rows.")
 
-    if attack_count < max_per_class and not attack_chunk.empty:
-        needed = max_per_class - attack_count
-        sampled = attack_chunk.sample(n=min(needed, len(attack_chunk)), random_state=42)
-        attack_rows.append(sampled)
-        attack_count += len(sampled)
+# Get equal number of rows from each class (based on the smaller one)
+n_samples = min(len(benign_df), len(attack_df))
+print(f"✅ Sampling {n_samples} rows per class to balance.")
 
-    print(f"Benign: {benign_count}, Attack: {attack_count}")
+# Sample randomly (reproducible with seed)
+benign_sample = benign_df.sample(n=n_samples, random_state=42)
+attack_sample = attack_df.sample(n=n_samples, random_state=42)
 
-df_balanced = pd.concat(benign_rows + attack_rows, ignore_index=True)
+# Combine and shuffle
+df_balanced = pd.concat([benign_sample, attack_sample], ignore_index=True)
 df_balanced = df_balanced.sample(frac=1, random_state=42)
-df_balanced.to_csv("train_balanced_chunked.csv", index=False)
+
+# Save to file
+df_balanced.to_csv("train_balanced_fullmem.csv", index=False)
+print("✅ Balanced dataset saved as 'train_balanced_fullmem.csv'")
