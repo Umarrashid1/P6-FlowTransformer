@@ -50,7 +50,7 @@ class BasicTransformer(BaseSequential):
                 m_x = TransformerDecoderBlock(real_size, self.internal_size, self.n_heads, dropout_rate=self.dropout_rate)(m_x)
             else:
                 m_x = TransformerEncoderBlock(real_size, self.internal_size, self.n_heads,
-                                              dropout_rate=self.dropout_rate, use_conv=self.useconv,
+                                              dropout_rate=self.dropout_rate, use_conv=self.use_conv,
                                               prefix=f"{prefix}block{layeri}")(m_x, training=True)
 
         return m_x
