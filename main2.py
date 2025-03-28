@@ -57,9 +57,8 @@ ft = FlowTransformer(pre_processing=pre_processing,
 df = pd.read_csv("merged_binary_dataset.csv")
 
 train_fraction = 0.01
-train_size = int(len(df) * train_fraction)
+df.sample(frac=train_fraction, random_state=42).to_csv("train_subset.csv", index=False)
 
-df.iloc[:train_size].to_csv("train_subset.csv", index=False)
 
 
 
