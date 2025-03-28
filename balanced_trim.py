@@ -1,11 +1,11 @@
 import pandas as pd
 
-chunksize = 1000
+chunksize = 10000
 benign_rows = []
 attack_rows = []
 benign_count = 0
 attack_count = 0
-max_per_class = 10
+max_per_class = 500000
 
 for chunk in pd.read_csv("merged_binary_dataset.csv", chunksize=chunksize):
     if benign_count >= max_per_class and attack_count >= max_per_class:
