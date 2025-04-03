@@ -1,29 +1,33 @@
-import pandas as pd
-
+import csv
+import os
 
 def clean_column_names(input_file, output_file):
-    # Read only the first row to get the column names (header)
-    df = pd.read_csv(input_file, nrows=0)
+    if os.stat(input_file).st_size == 0:
+        print(f"Input file '{input_file}' is empty. No output written.")
+        return
 
-    # Clean the column names by replacing '/' with '_per_' and ' ' with '_'
-    cleaned_columns = [col.replace('/', '_per_').replace(' ', '_') for col in df.columns]
+    with open(input_file, 'r', newline='') as infile, open(output_file, 'w', newline='') as outfile:
+        reader = csv.reader(infile)
+        writer = csv.writer(outfile)
 
-    # Open the input file and the output file
-    with open(input_file, 'r') as infile, open(output_file, 'w', newline='') as outfile:
-        # Write the cleaned header to the output file
-        header = infile.readline().strip().split(',')
+        try:
+            header = next(reader)
+        except StopIteration:
+            print(f"Input file '{input_file}' has no header row. No output written.")
+            return
+
         cleaned_header = [col.replace('/', '_per_').replace(' ', '_') for col in header]
-        outfile.write(','.join(cleaned_header) + '\n')
+        writer.writerow(cleaned_header)
 
-        # Now, copy the remaining lines (data) from the input file to the output file
-        for line in infile:
-            outfile.write(line)
+        for row in reader:
+            writer.writerow(row)
 
     print(f"Cleaned file saved to {output_file}")
 
 
+
 # Example usage:
-input_file = 'train_subset.csv'  # Replace with your input file path
-output_file = 'train_subset_cleaned.csv'  # Replace with your desired output file path
+input_file = 'merged_binary_dataset.csv'  # Replace with your input file path
+output_file = 'merged_binary_dataset.csv'  # Replace with your desired output file path
 
 clean_column_names(input_file, output_file)
