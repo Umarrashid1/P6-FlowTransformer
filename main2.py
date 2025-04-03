@@ -57,7 +57,7 @@ ft = FlowTransformer(pre_processing=pre_processing,
 
 # Load the specific dataset
 dataset_name = "DIAD"
-dataset_path = 'merged_binary_dataset.csv'
+dataset_path = 'merged_binary_dataset_cleaned.csv'
 eval_percent = 0.01
 eval_method = EvaluationDatasetSampling.LastRows
 

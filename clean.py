@@ -28,6 +28,6 @@ def clean_column_names(input_file, output_file):
 
 # Example usage:
 input_file = 'merged_binary_dataset.csv'  # Replace with your input file path
-output_file = 'merged_binary_dataset.csv'  # Replace with your desired output file path
+output_file = 'merged_binary_dataset_cleaned.csv'  # Replace with your desired output file path
 
 clean_column_names(input_file, output_file)
