@@ -57,9 +57,9 @@ ft = FlowTransformer(pre_processing=pre_processing,
 
 # Load the specific dataset
 dataset_name = "DIAD"
-dataset_path = 'merged_binary_dataset.csv'
-eval_percent = 0.01
-eval_method = EvaluationDatasetSampling.LastRows
+dataset_path = 'diad_balanced.csv'
+eval_percent = 1.0
+eval_method = EvaluationDatasetSampling.RandomRows
 
 dataset_specification = DatasetSpecification(
     include_fields=[
@@ -107,7 +107,7 @@ m.compile(optimizer="adam", loss='binary_crossentropy', metrics=['binary_accurac
 
 # Get the evaluation results
 eval_results: pd.DataFrame
-(train_results, eval_results, final_epoch) = ft.evaluate(m, batch_size=64, epochs=5, steps_per_epoch=64, early_stopping_patience=5)
+(train_results, eval_results, final_epoch) = ft.evaluate(m, batch_size=128, epochs=5, steps_per_epoch=64, early_stopping_patience=5)
 
 
 print(eval_results)
